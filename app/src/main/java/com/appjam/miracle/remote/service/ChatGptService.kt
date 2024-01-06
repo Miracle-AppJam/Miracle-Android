@@ -12,7 +12,7 @@ import retrofit2.http.Part
 interface ChatGptService {
 
     @Multipart
-    @POST("/chatgpt/data")
+    @POST("/chatgpt/file")
     suspend fun postMessage(
         @Part image: MultipartBody.Part,
         @Part("data") data: MessageRequest

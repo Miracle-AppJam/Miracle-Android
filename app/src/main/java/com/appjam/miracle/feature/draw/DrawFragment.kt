@@ -63,7 +63,7 @@ class DrawFragment: Fragment(), UploadDialogInterface {
                                     layoutDraw.visibility = View.GONE
                                     layoutLoading.visibility = View.GONE
                                 }
-                                requireContext().shortToast("성공")
+//                                requireContext().shortToast("성공")
                                 findNavController().navigate(R.id.action_drawFragment_to_chatFragment)
                             }
                         }
@@ -85,6 +85,11 @@ class DrawFragment: Fragment(), UploadDialogInterface {
         }
 
         binding.paintLayout.addView(myView)
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+            delay(200)
+            myView!!.mBitmap!!.eraseColor(requireContext().getColor(R.color.background))
+            myView!!.invalidate()
+        }
 //        binding.radioGroup.setOnCheckedChangeListener { radioGroup, checkedId ->
 //            when (checkedId) {
 //                R.id.btnRed -> myView!!.mPaint.color = Color.RED
