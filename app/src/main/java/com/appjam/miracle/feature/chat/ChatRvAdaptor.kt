@@ -34,7 +34,7 @@ class ChatRvAdaptor constructor(
             override fun bind(item: ChatRvItem) {
                 if (item.type is ChatRvType.Loading) {
                     binding.layoutContent.visibility = View.GONE
-                    binding.lottieLoading.visibility = View.GONE
+                    binding.lottieLoading.visibility = View.VISIBLE
                 } else {
                     if (item.type is ChatRvType.First) {
                         binding.imageThumbnail.visibility = View.VISIBLE

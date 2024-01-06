@@ -68,15 +68,16 @@ class ChatViewModel: ViewModel() {
             )
         }.onSuccess {
             Log.d("TAG", "sendMessage: Sucess")
-            data.removeLast()
-            data.add(
+            val newData = _itemState.value.items.toMutableList()
+            newData.removeLast()
+            newData.add(
                 ChatRvItem(
                     type = ChatRvType.Your,
                     content = it.message
                 )
             )
             _itemState.value = _itemState.value.copy(
-                items = data
+                items = newData
             )
             _sideEffect.send(ChatSideEffect.Success)
         }.onFailure {
