@@ -6,6 +6,6 @@
 
     <fragment
         android:id="@+id/drawFragment"
-        android:name="com.appjam.miracle.draw.DrawFragment"
+        android:name="com.appjam.miracle.feature.draw.DrawFragment"
         android:label="DrawFragment" />
 </navigation>

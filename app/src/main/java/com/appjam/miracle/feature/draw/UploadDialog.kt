@@ -1,4 +1,4 @@
-package com.appjam.miracle.draw
+package com.appjam.miracle.feature.draw
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -1,4 +1,4 @@
-package com.appjam.miracle.draw
+package com.appjam.miracle.feature.draw
 
 import android.content.Context
 import android.graphics.Bitmap
