@@ -7,5 +7,13 @@
     <fragment
         android:id="@+id/drawFragment"
         android:name="com.appjam.miracle.feature.draw.DrawFragment"
-        android:label="DrawFragment" />
+        android:label="DrawFragment" >
+        <action
+            android:id="@+id/action_drawFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.appjam.miracle.feature.chat.ChatFragment"
+        android:label="ChatFragment" />
 </navigation>

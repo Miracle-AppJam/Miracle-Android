@@ -44,6 +44,7 @@ class DrawViewModel: ViewModel() {
                 )
             }.onSuccess {
                 Log.d("TAG", "postImage: $it")
+                kotlin.runCatching {  }
                 val dao = MiracleDataBase.getInstance(context)?.drawDao()
                 dao?.insertMember(
                     entity = DrawEntity(

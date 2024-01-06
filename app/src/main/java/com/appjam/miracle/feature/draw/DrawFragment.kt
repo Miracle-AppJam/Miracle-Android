@@ -64,6 +64,7 @@ class DrawFragment: Fragment(), UploadDialogInterface {
                                     layoutLoading.visibility = View.GONE
                                 }
                                 requireContext().shortToast("성공")
+                                findNavController().navigate(R.id.action_drawFragment_to_chatFragment)
                             }
                         }
                         is DrawSideEffect.LOADING -> {
