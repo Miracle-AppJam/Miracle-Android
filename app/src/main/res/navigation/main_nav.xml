@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_nav"
-    app:startDestination="@id/drawFragment">
+    app:startDestination="@id/launchFragment">
 
     <fragment
         android:id="@+id/drawFragment"
@@ -16,4 +16,12 @@
         android:id="@+id/chatFragment"
         android:name="com.appjam.miracle.feature.chat.ChatFragment"
         android:label="ChatFragment" />
+    <fragment
+        android:id="@+id/launchFragment"
+        android:name="com.appjam.miracle.feature.launch.LaunchFragment"
+        android:label="LaunchFragment" >
+        <action
+            android:id="@+id/action_launchFragment_to_drawFragment"
+            app:destination="@id/drawFragment" />
+    </fragment>
 </navigation>
