@@ -10,7 +10,9 @@
         android:label="DrawFragment" >
         <action
             android:id="@+id/action_drawFragment_to_chatFragment"
-            app:destination="@id/chatFragment" />
+            app:destination="@id/chatFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"/>
     </fragment>
     <fragment
         android:id="@+id/chatFragment"
@@ -22,6 +24,8 @@
         android:label="LaunchFragment" >
         <action
             android:id="@+id/action_launchFragment_to_drawFragment"
-            app:destination="@id/drawFragment" />
+            app:destination="@id/drawFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"/>
     </fragment>
 </navigation>
