@@ -33,7 +33,10 @@ class ChatFragment: Fragment() {
                 viewModel.itemState.collect {
                     viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
                         binding.rvChat.adapter = ChatRvAdaptor(it.items)
-                        binding.rvChat.layoutManager = LinearLayoutManager(requireContext())
+                        binding.rvChat.layoutManager = LinearLayoutManager(requireContext()).apply {
+                            this.stackFromEnd = true
+                            this.reverseLayout = false
+                        }
                     }
                 }
             }
