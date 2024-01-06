@@ -6,6 +6,10 @@
     android:layout_height="match_parent"
     android:id="@+id/baseLayout"
     android:orientation="vertical">
+<!--    <androidx.appcompat.widget.AppCompatImageView-->
+<!--        android:id="@+id/image_test"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"/>-->
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_login"
         android:layout_width="match_parent"

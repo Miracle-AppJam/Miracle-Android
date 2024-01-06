@@ -13,20 +13,36 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
+
 import com.appjam.miracle.R
 import com.appjam.miracle.databinding.FragmentDrawBinding
+import com.appjam.miracle.utiles.shortToast
+import com.appjam.miracle.utiles.startAnimationWithHide
+import com.appjam.miracle.utiles.startAnimationWithShow
 import com.skydoves.colorpickerview.ColorPickerDialog
 import com.skydoves.colorpickerview.listeners.ColorEnvelopeListener
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class DrawFragment: Fragment(), UploadDialogInterface {
     private var myView: MyPaintView? = null
     private var penState: Boolean = true
     private var penColor: Int = Color.RED
+    private var dialog: UploadDialog? = null
     var count = 0
 
     private lateinit var binding: FragmentDrawBinding
+    private val viewModel by viewModels<DrawViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,7 +53,35 @@ class DrawFragment: Fragment(), UploadDialogInterface {
 //        title = "간단 그림판"
         myView = MyPaintView(requireContext())
 
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.drawSideEffect.collect {
+                    when (it) {
+                        is DrawSideEffect.SUCCESS -> {
+                            viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+                                with(binding) {
+                                    layoutDraw.visibility = View.GONE
+                                    layoutLoading.visibility = View.GONE
+                                }
+                                requireContext().shortToast("성공")
+                            }
+                        }
+                        is DrawSideEffect.LOADING -> {
 
+                        }
+                        is DrawSideEffect.FAILED -> {
+                            viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+                                with(binding) {
+                                    layoutDraw.visibility = View.VISIBLE
+                                    layoutLoading.visibility = View.GONE
+                                }
+                                requireContext().shortToast("로딩에 실패했어요")
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         binding.paintLayout.addView(myView)
 //        binding.radioGroup.setOnCheckedChangeListener { radioGroup, checkedId ->
@@ -86,8 +130,8 @@ class DrawFragment: Fragment(), UploadDialogInterface {
         }
 
         binding.textUpload.setOnClickListener {
-            val dialog = UploadDialog(this)
-            dialog.show(this.childFragmentManager, "UploadDialog")
+            dialog = UploadDialog(this)
+            dialog?.show(this.childFragmentManager, "UploadDialog")
         }
 
 //        btnTh.setOnClickListener {
@@ -158,6 +202,29 @@ class DrawFragment: Fragment(), UploadDialogInterface {
     }
 
     override fun onYesButtonClick() {
+        dialog?.dismiss()
+
+        binding.textLoading.text = "상담을 위해 사진을 \n분석하고있어요"
+        binding.layoutDraw.visibility = View.GONE
+        binding.layoutLoading.visibility = View.VISIBLE
+        startAnimationWithShow(requireContext(), binding.layoutLoading, R.anim.enter)
+        lifecycleScope.launch(Dispatchers.Main) {
+            delay(3000)
+            startAnimationWithHide(requireContext(), binding.textLoading, R.anim.exit)
+            delay(400)
+            binding.textLoading.text = "대화를 준비하고있어요"
+            binding.textLoading.visibility = View.VISIBLE
+            startAnimationWithShow(requireContext(), binding.textLoading, R.anim.enter)
+        }
+
+        viewModel.saveImage(
+            context = requireContext(),
+            bitmap = myView?.mBitmap!!
+        )
+        viewModel.postImage(
+            context = requireContext(),
+            bitmap = myView?.mBitmap!!
+        )
 
     }
 }
