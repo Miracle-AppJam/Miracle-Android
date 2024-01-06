@@ -6,4 +6,3 @@ data class MessageResponse(
     @field:SerializedName("message")
     val message: String
 )
-r
