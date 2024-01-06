@@ -1,5 +1,6 @@
 package com.appjam.miracle.draw
 
+import android.app.Dialog
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -19,7 +20,7 @@ import com.appjam.miracle.databinding.FragmentDrawBinding
 import com.skydoves.colorpickerview.ColorPickerDialog
 import com.skydoves.colorpickerview.listeners.ColorEnvelopeListener
 
-class DrawFragment: Fragment() {
+class DrawFragment: Fragment(), UploadDialogInterface {
     private var myView: MyPaintView? = null
     private var penState: Boolean = true
     private var penColor: Int = Color.RED
@@ -82,6 +83,11 @@ class DrawFragment: Fragment() {
                 binding.imagePenEraser.setImageResource(R.drawable.ic_eraser)
 
             }
+        }
+
+        binding.textUpload.setOnClickListener {
+            val dialog = UploadDialog(this)
+            dialog.show(this.childFragmentManager, "UploadDialog")
         }
 
 //        btnTh.setOnClickListener {
@@ -149,5 +155,9 @@ class DrawFragment: Fragment() {
             this.invalidate()
             return true
         }
+    }
+
+    override fun onYesButtonClick() {
+
     }
 }
