@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">miracle</string>
+    <string name="colorPickerCheckButton">적용</string>
 </resources>
